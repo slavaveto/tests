@@ -29,6 +29,9 @@ const loadTranslationsFromDatabase = async () => {
     const translations: any = {};
 
     try {
+
+        await new Promise((resolve) => setTimeout(resolve, 10));
+
         for (const table of tables) {
             const { data, error } = await supabase.from(table).select('*');
 

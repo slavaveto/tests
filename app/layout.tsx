@@ -17,7 +17,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-    title: "В.Вето | Персональный сайт психолога",
+    title: "Tests",
     description: "Психология, психотерапия, психологическое консультирование",
     icons: {
         icon: "/favicon.png"

@@ -12,6 +12,23 @@
 
 
 
+.page-transition {
+  opacity: 1;
+  transform: translateY(0); /* Начальное положение */
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.page-transition-fadeout {
+  opacity: 0;
+  transform: translateY(10px); /* Сдвиг вниз при fade-out */
+}
+
+.page-transition-fadein {
+  opacity: 0;
+  transform: translateY(10px); /* Без сдвига при fade-in */
+}
+
+
 .some_rich_text p {margin-bottom: 8px}
 
 strong {
