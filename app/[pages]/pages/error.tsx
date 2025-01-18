@@ -4,6 +4,9 @@ import React, {useState, useCallback, useEffect} from 'react';
 import {Alert, Spinner} from "@nextui-org/react";
 import Link from "next/link";
 
+import ReturnHome from "@/app/assets/returnHome";
+
+
 import CustomAlert from "@/app/components/CustomAlert";
 
 import LocalText from "@/app/assets/localText";
@@ -61,17 +64,7 @@ export default function Error ({namespace}: { namespace: string }) {
 
                             <div className="pl-0 flex w-full -justify-center   pb-[15px]">
 
-                                <div className="flex w-full pt-[30px]">
-                                    <Link
-                                        className="flex flex-row text-primary-500 hover:text-primary-400 transition items-center"
-                                        href="/"
-                                    >
-                                        <TbArrowBackUp size={24} className=""/>
-                                        <span className="pl-4 text-[14px]">
-                    <LocalText text="return_home" ns="misc"/>
-                </span>
-                                    </Link>
-                                </div>
+                                <ReturnHome onNavigateAction={handleNavigation} />
 
                             </div>
 
