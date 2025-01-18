@@ -7,10 +7,10 @@ import LocalText from "@/app/assets/localText";
 interface HeaderProps {
     width: string;
     namespace?: string;
-    onNavigate: (href: string) => void; // Новый проп для обработки переходов
+    onNavigateAction: (href: string) => void; // Новый проп для обработки переходов
 }
 
-export default function Header({width, namespace, onNavigate}: HeaderProps) {
+export default function Header({width, namespace, onNavigateAction}: HeaderProps) {
     return (
         <header className="-footer_bg -opacity-90 backdrop-blur-xl mb-[20px]"
                 style={{
@@ -28,7 +28,7 @@ export default function Header({width, namespace, onNavigate}: HeaderProps) {
                             href="/"
                             onClick={(e) => {
                                 e.preventDefault(); // Предотвращаем стандартное поведение
-                                onNavigate("/"); // Вызываем fade-out и навигацию
+                                onNavigateAction("/"); // Вызываем fade-out и навигацию
                             }}
 
                             className="flex items-center mr-[30px] text-default-500 --hover:text-primary-400 transition"

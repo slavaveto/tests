@@ -51,7 +51,7 @@ export default function Home() {
 
     return (
         <>
-            <DataLoader onLoad={handleDataLoad} isFirstLoad={isFirstLoad}/>
+            <DataLoader onLoadAction={handleDataLoad} isFirstLoad={isFirstLoad}/>
 
             {isLoading && isFirstLoad && (
                 <div
@@ -84,7 +84,7 @@ export default function Home() {
                 {/*>*/}
 
                     <div className="flex flex-col min-h-svh">
-                        <Header width="500" namespace={"home"} onNavigate={handleNavigation}/>
+                        <Header width="500" namespace={"home"} onNavigateAction={handleNavigation}/>
 
                         <main className="flex-grow container mx-auto px-3"
                               style={{maxWidth: '500px'}}>

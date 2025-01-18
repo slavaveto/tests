@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/app/assets/supabaseClient';
 
 interface DataLoaderProps {
-    onLoad: (data: any[], isLoaded: boolean) => void; // Коллбэк для передачи данных и статуса загрузки
+    onLoadAction: (data: any[], isLoaded: boolean) => void; // Коллбэк для передачи данных и статуса загрузки
     isFirstLoad: boolean; // Новый проп для первого запуска
 }
 
-export default function DataLoader({ onLoad, isFirstLoad }: DataLoaderProps) {
+export default function DataLoader({ onLoadAction, isFirstLoad }: DataLoaderProps) {
 
     useEffect(() => {
         const fetchPages = async () => {
@@ -47,7 +47,7 @@ export default function DataLoader({ onLoad, isFirstLoad }: DataLoaderProps) {
 
 
                 // Передаём данные родительскому компоненту напрямую
-                onLoad(
+                onLoadAction(
                     data.map(({ slug, page_key }) => ({ slug, page_key })), // Отфильтрованные данные
                     true
                 );
@@ -55,14 +55,14 @@ export default function DataLoader({ onLoad, isFirstLoad }: DataLoaderProps) {
                 console.error('Ошибка загрузки страниц:', err);
 
                 // Сообщаем родительскому компоненту об ошибке
-                onLoad([], false);
+                onLoadAction([], false);
             } finally {
                 //console.log('Загрузка страниц завершена.');
             }
         };
 
         fetchPages();
-    }, [onLoad]);
+    }, [onLoadAction]);
 
     return null; // Этот компонент ничего не отображает
 }

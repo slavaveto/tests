@@ -43,7 +43,7 @@ export default function Error ({namespace}: { namespace: string }) {
         >
 
             <div className="flex flex-col min-h-svh">
-                <Header width="500" namespace={namespace} onNavigate={handleNavigation}/>
+                <Header width="500" namespace={namespace} onNavigateAction={handleNavigation}/>
 
                 <main className="flex-grow container mx-auto px-3"
                       style={{maxWidth: '500px'}}>
