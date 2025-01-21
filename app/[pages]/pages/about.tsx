@@ -1,7 +1,6 @@
 'use client';
 
 import React, {useState, useCallback, useEffect} from 'react';
-import {useRouter} from "next/navigation";
 
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
@@ -23,9 +22,7 @@ export default function Page({namespace}: { namespace: string }) {
     return (
         <>
             {showSpinner  && (
-                <div
-                    className="fixed inset-0 flex justify-center items-center h-screen
-                        translate-y-[-5vh] xs450:translate-y-[-5vh]">
+                <div className="spinner">
                     <Spinner/>
                 </div>
             )}

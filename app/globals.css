@@ -12,10 +12,68 @@
 
 
 
+
+.ck.ck-content.ck-editor__editable {
+  height: 500px;
+  border: 2px solid #e4e4e7 !important; /* Цвет границы */
+  border-radius: 12px!important;       /* Скругление углов */
+  padding: 18px 20px 12px!important;            /* Внутренние отступы */
+  font-size: 14px!important;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05)!important;
+  /*height: 110px!important;*/
+  /*height: 100%!important;*/
+}
+.dark .ck.ck-content.ck-editor__editable {
+  border: 2px solid #3f3f46 !important; /* Цвет границы */
+}
+.ck.ck-content:hover {
+  border: 2px solid #a1a1aa !important;
+}
+.dark .ck.ck-content:hover {
+  border: 2px solid #71717a !important; /* Цвет границы */
+}
+.ck.ck-content:focus {
+  border: 2px solid #006FEE !important;
+}
+.dark .ck.ck-content:focus {
+  border: 2px solid #006FEE !important;
+}
+.ck.ck-content.ck-editor__editable p {
+  margin: 0px!important;
+  padding: 0px!important;
+  padding-bottom: 6px!important;
+}
+.ck-powered-by {
+  display: none !important;
+}
+.ck-evaluation-badge {
+  display: none !important;
+}
+
+
+
+.spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Эквивалент `h-screen` */
+  transform: translateY(-5vh); /* Эквивалент `translate-y-[-5vh]` */
+}
+@media (min-width: 640px) { /* Эквивалент sm: */
+  .spinner {
+    transform: translateY(-5vh); /* Можно задать другое значение для sm */
+  }
+}
+
 .page-transition {
   opacity: 1;
   transform: translateY(0); /* Начальное положение */
-  transition: opacity 500ms ease, transform 500ms ease;
+  transition: opacity 300ms ease, transform 300ms ease;
 }
 
 .page-transition-fadeout {
@@ -25,12 +83,14 @@
 
 .page-transition-fadein {
   opacity: 0;
-  transform: translateY(10px); /* Без сдвига при fade-in */
+  transform: translateY(0px); /* Без сдвига при fade-in */
 }
 
 
-.some_rich_text p {margin-bottom: 8px}
-
+.some_rich_text p {
+  margin-bottom: 8px;
+  line-height: inherit!important;
+}
 strong {
   font-weight: 500!important; /* Medium */
 }

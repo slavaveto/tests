@@ -45,7 +45,6 @@ export default function DataLoader({ onLoadAction, isFirstLoad }: DataLoaderProp
                 // const elapsedTime2 = Date.now() - startTime;
                 // console.log("date", elapsedTime2)
 
-
                 // Передаём данные родительскому компоненту напрямую
                 onLoadAction(
                     data.map(({ slug, page_key }) => ({ slug, page_key })), // Отфильтрованные данные

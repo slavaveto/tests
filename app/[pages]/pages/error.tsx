@@ -32,9 +32,7 @@ export default function Error ({namespace}: { namespace: string }) {
     return (
     <>
         {showSpinner  && (
-            <div
-                className="fixed inset-0 flex justify-center items-center h-screen
-                        translate-y-[-5vh] xs450:translate-y-[-5vh]">
+            <div className="spinner">
                 <Spinner/>
             </div>
         )}
