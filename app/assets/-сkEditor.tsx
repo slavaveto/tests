@@ -166,6 +166,36 @@ function CustomEditor() {
                             viewWriter.addClass('image_resized', viewFigure); // Добавляем класс image_resized
                             viewWriter.addClass('image-style-align-left', viewFigure); // Добавляем класс image_resized
 
+                            setTimeout(() => {
+                                // Находим элемент <img> внутри <figure>
+                                const viewImg = Array.from(viewFigure.getChildren()).find((child:any) =>
+                                    child.is('element', 'img')
+                                );
+
+                                if (viewImg) {
+                                    console.log('Элемент <img> найден:', viewImg);
+
+                                    // Получаем текущий src и создаем srcset
+                                    const src = '/uploads/me--.jpg'; // Используем фиксированный путь для проверки
+                                    const srcset = `${src} 1000w, ${src} 500w`;
+                                    const sizes = '(max-width: 600px) 500px, 1000px';
+
+                                    // Устанавливаем атрибуты
+                                    viewWriter.setAttribute('src', src, viewImg);
+                                    viewWriter.setAttribute('srcset', srcset, viewImg);
+                                    viewWriter.setAttribute('sizes', sizes, viewImg);
+
+                                    console.log('Атрибуты srcset и sizes добавлены:', {
+                                        src,
+                                        srcset,
+                                        sizes,
+                                    });
+                                } else {
+                                    console.error('Ошибка: Элемент <img> не найден.');
+                                }
+                            }, 0);
+
+
                             editor.execute('resizeImage', { width: '25%' });
 
                             // Обновляем состояние интерфейса, чтобы кнопка "Align Left" была активной

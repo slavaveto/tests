@@ -19,7 +19,7 @@ function generateRandomName() {
     return result;
 }
 
-export async function POST(req: Request) {
+export async function POST(req:any) {
     try {
         const contentType = req.headers.get("content-type");
         if (!contentType || !contentType.startsWith("multipart/form-data")) {
@@ -38,8 +38,12 @@ export async function POST(req: Request) {
         }
 
         const uploadDir = path.join(process.cwd(), "public/uploads");
+        const resizedDir = path.join(uploadDir, "resized");
         if (!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir, { recursive: true });
+        }
+        if (!fs.existsSync(resizedDir)) {
+            fs.mkdirSync(resizedDir, { recursive: true });
         }
 
         const reader = req.body?.getReader();
@@ -47,7 +51,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Тело запроса пустое" }, { status: 400 });
         }
 
-        const chunks: Uint8Array[] = [];
+        const chunks = [];
         let done = false;
 
         // Читаем данные как бинарный поток
@@ -73,35 +77,44 @@ export async function POST(req: Request) {
             const contentDisposition = headersRaw.match(/Content-Disposition: form-data;(.+?)(\r\n|$)/i);
             if (contentDisposition) {
                 const filenameMatch = contentDisposition[1].match(/filename="(.+?)"/);
-                const filename = filenameMatch ? filenameMatch[1] : null;
+                const originalFilename = filenameMatch ? filenameMatch[1] : null;
 
-                if (filename) {
-                    const filePath = path.join(uploadDir, filename);
+                if (originalFilename) {
+                    const fileExtension = path.extname(originalFilename); // Получаем расширение
+                    const randomName = generateRandomName(); // Генерируем случайное имя
 
-                    // Сохраняем оригинальное изображение
+                    // Оригинальный файл
+                    const filePath = path.join(uploadDir, `${randomName}${fileExtension}`);
                     fs.writeFileSync(filePath, Buffer.from(body, "binary"));
 
-                    // Создаем уменьшенные копии с помощью sharp
-                    const resizedDir = path.join(uploadDir, "resized");
-                    if (!fs.existsSync(resizedDir)) {
-                        fs.mkdirSync(resizedDir);
-                    }
+                    // Получаем размер оригинального изображения
+                    const metadata = await sharp(filePath).metadata();
+                    const originalWidth = metadata.width || Infinity;
 
-                    const sizes = [500, 1000]; // Указываем размеры для уменьшенных изображений
+                    // Создаем уменьшенные копии только если размер меньше оригинального
+                    const sizes = [320, 768, 1024, 1920];
+                    const resizedFiles = [];
 
                     for (const size of sizes) {
-                        const resizedFilePath = path.join(resizedDir, `${size}-${filename}`);
-                        await sharp(filePath)
-                            .resize(size, size, {
-                                fit: "inside",
-                                withoutEnlargement: true,
-                            })
-                            .toFile(resizedFilePath);
+                        if (size <= originalWidth) {
+                            const resizedFilePath = path.join(
+                                resizedDir,
+                                `${randomName}_${size}${fileExtension}`
+                            );
+                            await sharp(filePath)
+                                .resize(size, null, {
+                                    fit: "inside",
+                                    withoutEnlargement: true,
+                                })
+                                .toFile(resizedFilePath);
+
+                            resizedFiles.push(`/uploads/resized/${randomName}_${size}${fileExtension}`);
+                        }
                     }
 
                     return NextResponse.json({
-                        url: `/uploads/${filename}`,
-                        resized: sizes.map((size) => `/uploads/resized/${size}-${filename}`),
+                        url: `/uploads/${randomName}${fileExtension}`,
+                        resized: resizedFiles,
                     });
                 }
             }

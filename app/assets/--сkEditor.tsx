@@ -36,6 +36,8 @@ import {
 import 'ckeditor5/ckeditor5.css';
 import 'ckeditor5-premium-features/ckeditor5-premium-features.css';
 
+import path from 'path';
+
 const LICENSE_KEY =
     'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3Mzc4NDk1OTksImp0aSI6IjM2ZTg0ODAzLWRmYzUtNGJkYy04MzFjLTI2Y2IzOTY4ZjQyYiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6ImUwNGJjZTRkIn0.0YnbXyXGoJigqYpCppDQSwJjhK2EgzbUVgpinviafWfICE4rXYpBgzx-OzViEgDeGRc-X8ergYAPjaFpuPyQnQ';
 
@@ -165,6 +167,77 @@ function CustomEditor() {
                             viewWriter.setStyle('width', '25%', viewFigure); // Устанавливаем ширину на figure
                             viewWriter.addClass('image_resized', viewFigure); // Добавляем класс image_resized
                             viewWriter.addClass('image-style-align-left', viewFigure); // Добавляем класс image_resized
+
+
+
+
+
+                            setTimeout(() => {
+                                const viewImg = Array.from(viewFigure.getChildren()).find((child: any) =>
+                                    child.is('element', 'img')
+                                );
+
+                                if (!viewImg) {
+                                    console.error('Ошибка: Элемент <img> не найден.');
+                                    return;
+                                }
+
+                                const checkSrcUpdate = () => {
+                                    const src = viewImg.getAttribute('src');
+                                    if (src && src.startsWith('/uploads/')) {
+                                        console.log('src обновлен:', src);
+                                        applySrcSet(viewImg, src);
+                                    } else if (src && src.startsWith('data:image')) {
+                                        console.warn('src пока временный, ждем обновления:', src);
+                                        setTimeout(checkSrcUpdate, 0); // Повторяем проверку через 100 мс
+                                    } else {
+                                        console.error('Ошибка: src остается некорректным:', src);
+                                    }
+                                };
+
+                                checkSrcUpdate();
+
+                                function applySrcSet(viewImg: any, src: string) {
+                                    const originalFileName = extractFileName(src);
+
+                                    if (!originalFileName) {
+                                        console.error('Ошибка: Не удалось извлечь имя файла из src:', src);
+                                        return;
+                                    }
+
+                                    const srcset = [
+                                        { size: 320, path: `/uploads/resized/320-${originalFileName}` },
+                                        { size: 768, path: `/uploads/resized/768-${originalFileName}` },
+                                        { size: 1024, path: `/uploads/resized/1024-${originalFileName}` },
+                                        { size: 1920, path: `/uploads/resized/1920-${originalFileName}` },
+                                    ]
+                                        .map(({ size, path }) => `${path} ${size}w`)
+                                        .join(', ');
+
+                                    const sizes = `(max-width: 320px) 320px,
+                (max-width: 768px) 768px,
+                (max-width: 1024px) 1024px,
+                1920px`;
+
+                                    viewWriter.setAttribute('srcset', srcset, viewImg);
+                                    viewWriter.setAttribute('sizes', sizes, viewImg);
+
+                                    console.log('Атрибуты srcset и sizes добавлены:', {
+                                        src,
+                                        srcset,
+                                        sizes,
+                                    });
+                                }
+
+                                function extractFileName(src: string): string | null {
+                                    const segments = src.split('/');
+                                    return segments.length > 0 ? segments.pop() : null;
+                                }
+                            }, 0);
+
+
+
+
 
                             editor.execute('resizeImage', { width: '25%' });
 
