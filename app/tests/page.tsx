@@ -23,7 +23,7 @@ import {
 
 import dynamic from 'next/dynamic';
 
-const CustomEditor = dynamic(() => import( '@/app/components/CkEditor' ), {ssr: false});
+const CustomEditor = dynamic(() => import( '@/app/tests/CkEditor' ), {ssr: false});
 
 import Link from "next/link";
 
