@@ -12,6 +12,12 @@ import {
     Bold,
     Italic,
     Underline,
+    Alignment,
+
+    FontSize,
+    FontBackgroundColor,
+    FontColor,
+    FontFamily,
 
     Link,
 
@@ -35,6 +41,7 @@ import {
 
 import 'ckeditor5/ckeditor5.css';
 import 'ckeditor5-premium-features/ckeditor5-premium-features.css';
+import FontWeight from './fontWeight';
 
 const LICENSE_KEY =
     'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3Mzc4NDk1OTksImp0aSI6IjM2ZTg0ODAzLWRmYzUtNGJkYy04MzFjLTI2Y2IzOTY4ZjQyYiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6ImUwNGJjZTRkIn0.0YnbXyXGoJigqYpCppDQSwJjhK2EgzbUVgpinviafWfICE4rXYpBgzx-OzViEgDeGRc-X8ergYAPjaFpuPyQnQ';
@@ -48,18 +55,30 @@ function CustomEditor() {
                 initialData: 'Welcome to CKEditor 5!',
                 placeholder: 'Type or paste your content here!',
 
+                // 'fontFamily',  'insertImage',
+
                 toolbar: {
-                    items: ['bold', 'italic', 'underline', '|', 'link', 'insertImage', '|', 'bulletedList'],
+                    items: ['bold', 'italic', 'underline',
+                         '|', 'fontSize',  'fontColor', 'fontBackgroundColor',
+                        '|', 'link' , '|','alignment','bulletedList'],
                     shouldNotGroupWhenFull: false
                 },
 
                 plugins: [
+
+
                     Essentials,
                     Heading,
 
                     Bold,
                     Italic,
                     Underline,
+                    Alignment,
+
+                    FontSize,
+                    FontBackgroundColor,
+                    FontColor,
+                    FontFamily,
 
                     Link,
 
@@ -85,7 +104,6 @@ function CustomEditor() {
                     uploadUrl: '/api/upload',
                 },
                 image: {
-
                     toolbar: [
                         // 'toggleImageCaption',
                         // 'imageTextAlternative',
@@ -120,6 +138,48 @@ function CustomEditor() {
                     ],
                     resizeUnit: '%',
                 },
+                fontSize: {
+                    options: [12, 13, 14, 15, 'default', 17, 18, 19, 20],
+                    supportAllValues: true
+                },
+                fontFamily: {
+                    options: [
+                        'default',
+                        'Arial, Helvetica, sans-serif',
+                        'Courier New, Courier, monospace',
+                        'Georgia, serif',
+                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                        'Tahoma, Geneva, sans-serif',
+                        'Times New Roman, Times, serif',
+                        'Trebuchet MS, Helvetica, sans-serif',
+                        'Verdana, Geneva, sans-serif',
+                    ],
+                },
+                // fontColor: {
+                //     colors: [
+                //         {
+                //             color: 'hsl(0, 0%, 0%)',
+                //             label: 'Black',
+                //         },
+                //         {
+                //             color: 'hsl(0, 0%, 30%)',
+                //             label: 'Dim grey',
+                //         },
+                //         {
+                //             color: 'hsl(0, 0%, 60%)',
+                //             label: 'Grey',
+                //         },
+                //         {
+                //             color: 'hsl(0, 0%, 90%)',
+                //             label: 'Light grey',
+                //         },
+                //         {
+                //             color: 'hsl(0, 0%, 100%)',
+                //             label: 'White',
+                //             hasBorder: true,
+                //         },
+                //     ],
+                // },
 
                 list: {
                     properties: {
@@ -146,6 +206,8 @@ function CustomEditor() {
 
             onReady={(editor) => {
                 //console.log('Editor is ready'); // Убедимся, что редактор готов
+
+
 
 
 
