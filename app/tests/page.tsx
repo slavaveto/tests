@@ -31,6 +31,26 @@ export default function Home() {
 
     const [isModalOpen, setIsModalOpen] = useState(false); // Состояние модального окна
 
+    useEffect(() => {
+        if (isModalOpen) {
+            // Disable enforced focus behavior
+            const handleFocusOutside = (e: any) => {
+                if (!document.querySelector(".nextui-modal")?.contains(e.target)) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                }
+            };
+
+            // Add event listener to manage focus when modal is open
+            document.addEventListener("focus", handleFocusOutside, true);
+
+            // Cleanup event listener on modal close
+            return () => {
+                document.removeEventListener("focus", handleFocusOutside, true);
+            };
+        }
+    }, [isModalOpen]);
+
     return (
         <>
 
@@ -49,6 +69,8 @@ export default function Home() {
                         placement="top"
 
                         isDismissable={false}
+                        className="nextui-modal"
+
 
                     >
                         <ModalContent>
