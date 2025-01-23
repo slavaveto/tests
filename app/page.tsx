@@ -12,11 +12,6 @@ import usePageTransition from "@/app/assets/usePageTransition";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, RadioGroup, Radio, } from '@nextui-org/react';
 
 
-// import CustomEditor from "@/app/assets/editor";
-
-import dynamic from 'next/dynamic';
-const CustomEditor = dynamic(() => import( '@/app/tests/CkEditor' ), {ssr: false});
-
 import Link from "next/link";
 
 type Page = {
@@ -33,6 +28,7 @@ export default function Home() {
     const [isDataLoading, setIsDataLoading] = useState(true);
 
     const [isModalOpen, setIsModalOpen] = useState(false); // Состояние модального окна
+
 
 
     const {isInternalTransition, hasCheckedTransition, isExiting, showSpinner, handleNavigation} =
@@ -82,7 +78,7 @@ export default function Home() {
 
 
 
-
+укеуекцуке
 
 
 

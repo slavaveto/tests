@@ -7,6 +7,8 @@ import { themeScript } from "@/app/assets/themeScript";
 import React from "react"; // Обновите путь, если требуется
 import DisableScroll from "@/app/assets/disableScroll";
 
+import DeviceDetect from '@/app/assets/mobileDetect';
+
 
 const inter = Inter({
     variable: "--font-inter",
@@ -23,10 +25,6 @@ export const metadata: Metadata = {
     icons: {
         icon: process.env.NODE_ENV === "development" ? "/favicon_local.png" : "/favicon.png",
     },
-    // viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
-    // appleMobileWebAppCapable: "yes",
-    // appleMobileWebAppStatusBarStyle: "default",
-    // mobileWebAppCapable: "yes",
 };
 
 export default  function RootLayout({ children }: { children: React.ReactNode }) {
@@ -48,7 +46,7 @@ export default  function RootLayout({ children }: { children: React.ReactNode })
         </head>
         <body>
         <Providers>
-
+            <DeviceDetect />
 
             {children}
             {/*<DisableScroll />*/}
