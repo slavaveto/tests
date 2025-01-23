@@ -8,30 +8,40 @@ export default function WordTooltip() {
     const tooltipHeight = 40; // Примерная высота тултипа (можно настроить)
     const tooltipOffset = 65; // Отступ сверху над словом
 
-    const handleDoubleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        const selection = window.getSelection();
-        const word = selection?.toString().trim();
+    const [tapCount, setTapCount] = useState(0); // Счётчик для определения двойного тапа
 
-        if (word) {
-            const range = selection?.getRangeAt(0); // Получаем выделенный текст
-            const rect = range?.getBoundingClientRect(); // Координаты выделенного текста
+    const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+        setTapCount((prev) => prev + 1);
 
-            if (rect) {
-                // Проверяем, помещается ли тултип сверху
-                const canShowAbove = rect.top > tooltipHeight + tooltipOffset;
+        setTimeout(() => {
+            setTapCount(0); // Сбрасываем счётчик через 300 мс
+        }, 300);
 
-                const tooltipTop = canShowAbove
-                    ? rect.top + window.scrollY - tooltipOffset // Если место есть, размещаем сверху
-                    : rect.bottom + window.scrollY + 10; // Если нет места, размещаем снизу
+        if (tapCount === 1) {
+            const selection = window.getSelection();
+            const word = selection?.toString().trim();
 
-                const tooltipLeft = rect.left + window.scrollX; // Учитываем горизонтальную прокрутку
+            if (word) {
+                const range = selection?.getRangeAt(0); // Получаем выделенный текст
+                const rect = range?.getBoundingClientRect(); // Координаты выделенного текста
 
-                setPosition({
-                    top: tooltipTop,
-                    left: tooltipLeft,
-                });
+                if (rect) {
+                    // Проверяем, помещается ли тултип сверху
+                    const canShowAbove = rect.top > tooltipHeight + tooltipOffset;
 
-                setSelectedWord(word); // Сохраняем выделенное слово
+                    const tooltipTop = canShowAbove
+                        ? rect.top + window.scrollY - tooltipOffset // Если место есть, размещаем сверху
+                        : rect.bottom + window.scrollY + 10; // Если нет места, размещаем снизу
+
+                    const tooltipLeft = rect.left + window.scrollX; // Учитываем горизонтальную прокрутку
+
+                    setPosition({
+                        top: tooltipTop,
+                        left: tooltipLeft,
+                    });
+
+                    setSelectedWord(word); // Сохраняем выделенное слово
+                }
             }
         }
     };
@@ -56,7 +66,7 @@ export default function WordTooltip() {
     return (
         <div style={{ position: 'relative', padding: '20px', minHeight: '200px' }}>
             <div
-                onDoubleClick={handleDoubleClick}
+                onTouchEnd={handleTouchEnd} // Используем touch событие
                 style={{
                     padding: '20px',
                     border: '1px solid #ccc',
@@ -64,7 +74,7 @@ export default function WordTooltip() {
                     cursor: 'pointer',
                 }}
             >
-                Дважды кликните на любое слово из этого текста, чтобы увидеть его в тултипе.
+                Дважды тапните или кликните на любое слово из этого текста, чтобы увидеть его в тултипе.
             </div>
 
             {selectedWord && position && (
