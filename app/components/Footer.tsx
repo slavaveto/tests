@@ -18,10 +18,10 @@ export default function Footer ({ width }: { width: string }) {
                 {/*</div>*/}
                 <div className="flex justify-end">
                     <div className="flex flex-col pr-2">
-                        {/*<LangToggle/>*/}
+                        <LangToggle/>
                     </div>
                     <div className="flex flex-col">
-                        {/*<ThemeToggle/>*/}
+                        <ThemeToggle/>
                     </div>
                 </div>
             </div>

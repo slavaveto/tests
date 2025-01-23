@@ -9,10 +9,7 @@ import {Spinner} from "@nextui-org/react";
 import LoremText from "@/app/assets/loremText";
 import DataLoader from "@/app/assets/dataLoader";
 import usePageTransition from "@/app/assets/usePageTransition";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, RadioGroup, Radio, } from '@nextui-org/react';
 
-
-import Link from "next/link";
 
 type Page = {
     page_key: string;
@@ -26,10 +23,6 @@ export default function Home() {
 
     const [isLoremLoading, setIsLoremLoading] = useState(true);
     const [isDataLoading, setIsDataLoading] = useState(true);
-
-    const [isModalOpen, setIsModalOpen] = useState(false); // Состояние модального окна
-
-
 
     const {isInternalTransition, hasCheckedTransition, isExiting, showSpinner, handleNavigation} =
         usePageTransition(false, () => {
@@ -78,7 +71,6 @@ export default function Home() {
 
 
 
-укеуекцуке
 
 
 
