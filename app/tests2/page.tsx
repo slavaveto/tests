@@ -8,7 +8,7 @@ export default function WordTooltip() {
     const [tapCount, setTapCount] = useState(0); // Счётчик для определения двойного тапа
     const tooltipOffset = 75; // Отступ сверху над словом
 
-    const handleDoubleClickOrTap = (e: React.MouseEvent | React.TouchEvent) => {
+    const handleDoubleClickOrTap = () => {
         const selection = window.getSelection();
         const word = selection?.toString().trim();
 
@@ -32,10 +32,10 @@ export default function WordTooltip() {
     };
 
     const handleDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        handleDoubleClickOrTap(e); // Обработка двойного клика на ПК
+        handleDoubleClickOrTap(); // Обработка двойного клика на ПК
     };
 
-    const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    const handleTouchEnd = () => {
         setTapCount((prev) => prev + 1);
 
         setTimeout(() => {
@@ -43,7 +43,7 @@ export default function WordTooltip() {
         }, 300);
 
         if (tapCount === 1) {
-            handleDoubleClickOrTap(e); // Обработка двойного тапа
+            handleDoubleClickOrTap(); // Обработка двойного тапа
         }
     };
 
@@ -67,13 +67,14 @@ export default function WordTooltip() {
     return (
         <div
             style={{
-                marginTop: '100px', // Устанавливаем `margin` для проверки
+                marginTop: '50px', // Устанавливаем `margin` для проверки
                 padding: '20px',
                 minHeight: '200px',
                 border: '1px solid #ccc',
                 borderRadius: '8px',
                 cursor: 'pointer',
-                fontSize: '20px',
+                fontSize: '20px', // Увеличенный шрифт для мобильных
+                lineHeight: '1.5',
             }}
             onDoubleClick={handleDoubleClick} // Обработка двойного клика на ПК
             onTouchEnd={handleTouchEnd} // Обработка двойного тапа на мобильных устройствах
