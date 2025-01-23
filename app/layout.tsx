@@ -5,6 +5,7 @@ import "./globals.css";
 import { Providers } from "@/app/providers/Providers";
 import { themeScript } from "@/app/assets/themeScript";
 import React from "react"; // Обновите путь, если требуется
+import DisableScroll from "@/app/assets/disableScroll";
 
 
 const inter = Inter({
@@ -50,7 +51,7 @@ export default  function RootLayout({ children }: { children: React.ReactNode })
 
 
             {children}
-
+            <DisableScroll />
 
         </Providers>
         </body>
