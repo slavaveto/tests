@@ -14,25 +14,25 @@
 
 html,
 body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
+  /*margin: 0;*/
+  /*padding: 0;*/
+  /*width: 100%;*/
+  /*height: 100%;*/
   overflow: hidden; /* Скрывает прокрутку */
 }
 
-#root, /* Для FlutterFlow */
-#__next, /* Для Next.js */
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  position: fixed; /* Фиксирует контент */
-}
+/*#root, !* Для FlutterFlow *!*/
+/*#__next, !* Для Next.js *!*/
+/*body {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  width: 100vw;*/
+/*  height: 100vh;*/
+/*  overflow: hidden;*/
+/*  position: fixed; !* Фиксирует контент *!*/
+/*}*/
 
 
 
